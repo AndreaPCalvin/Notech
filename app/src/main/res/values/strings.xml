@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Notech</string>
     <string name="texto_detectado">Texto detectado</string>
+    <string name="reconocer_texto">Reconocer texto</string>
+    <string name="tomar_imagen">Tomar imagen</string>
 </resources>

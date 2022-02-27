@@ -1,52 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.6">
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+        </ImageView>
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/image_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center|center"
+        android:layout_weight="0.3">
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Texto reconocido"
+            android:textAlignment="center"
+            android:layout_marginTop= "15dp"
+            android:layout_marginBottom="15dp"
+            android:textSize="18sp">
+        </TextView>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="26sp"
-        android:maxLines="5"
-        android:layout_below="@id/image_view"
-        android:text="Texto detectado" />
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center|center"
+        android:layout_weight="0.2">
+        <Button
+            android:id="@+id/take_image_button"
+            android:layout_width="350dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_height="wrap_content"
+            android:background="#673AB7"
+            android:layout_marginBottom="12dp"
+            android:text="@string/tomar_imagen"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17sp" >
+        </Button>
 
-    <Button
-        android:id="@+id/take_image_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/detect_text_button"
-        android:background="#673AB7"
-        android:text="Tomar imagen"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        android:layout_marginBottom="10dp"/>
-
-    <Button
-        android:id="@+id/detect_text_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#009688"
-        android:text="Reconocer texto"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
+        <Button
+            android:id="@+id/detect_text_button"
+            android:layout_width="350dp"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_height="wrap_content"
+            android:background="#009688"
+            android:text="@string/reconocer_texto"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17sp" >
+        </Button>
+    </LinearLayout>
 
 
-</RelativeLayout>
+
+
+</LinearLayout>
 
 

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView textView;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void recogniseTextFromImage() {
         TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
-        InputImage image = InputImage.fromBitmap(imageBitmap, 90);
+        InputImage image = InputImage.fromBitmap(imageBitmap, 0);
         recognizer.process(image)
                         .addOnSuccessListener(visionText -> {
                             // Task completed successfully
