@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Notech</string>
+    <string name="tab_text_1">SUBIR APUNTES</string>
+    <string name="tab_text_2">MIS APUNTES</string>
+    <string name="tab_text_3">BANCO COMÚN</string>
+</resources>
