@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Button takeImageButton = findViewById(R.id.take_image_button);
         Button detectTextButton = findViewById(R.id.detect_text_button);
 
-        takeImageButton.setOnClickListener(view -> dispatchTakePictureIntent());
+        takeImageButton.setOnClickListener(view -> checkPermission(Manifest.permission.CAMERA, MY_CAMERA_REQUEST_CODE));
 
 
         detectTextButton.setOnClickListener(view -> {
@@ -57,29 +57,40 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+    public void checkPermission(String permission, int requestCode) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] { permission }, requestCode);
         }
+        else if (permission == Manifest.permission.CAMERA) takePhoto();
+    }
 
-        // Si hay algún componente de actividad que pueda manejar la imagen
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takePhoto();
+            } else {
+                Toast.makeText(this, "Permisos de cámara denegados, acéptelos para usar esta función.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private void takePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
        if (getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
                 Toast.makeText(this, "Error creando la imagen.", Toast.LENGTH_SHORT).show();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.notech.fileprovider",
-                        photoFile);
+                Uri photoURI = FileProvider.getUriForFile(this,"com.example.notech.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
@@ -107,10 +118,7 @@ public class MainActivity extends AppCompatActivity {
                             String recognizedText = visionText.getText();
                             textView.setText(recognizedText);
                         })
-                        .addOnFailureListener(
-                                e -> {
-                                    // Task failed with an exception
-                                    // ...
+                        .addOnFailureListener( e -> {Toast.makeText(this, "Hubo un problema reconociendo el texto.", Toast.LENGTH_SHORT).show();
                                 });
 
     }
@@ -125,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
